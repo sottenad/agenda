@@ -8,8 +8,6 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var passport = require('passport');
 
-
-var configDB = require('./config/database.js');
 var app = express();
 
 //Load routes
@@ -32,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
 app.use(cookieParser('secret'));
-app.use(session({ cookie:{ maxAge: 60000}, secret: 'agendasecret', resave: true, saveUninitialized: true })); // session secret
+app.use(session({ cookie:{ maxAge: 600000}, secret: 'agendasecret', resave: true, saveUninitialized: true })); // session secret
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -73,5 +71,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/agenda-test'); 
 
 module.exports = app;

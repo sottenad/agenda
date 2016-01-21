@@ -1,0 +1,36 @@
+<div class="col-sm-6">
+    
+    <div class="agendaList">
+        <h2>Agendas</h2>
+        {{user._id}}
+        <table class="table" data-bind="foreach: agendas">
+            <tr>
+                <td><span data-bind="text: name"></span></td>
+                <td><a data-bind="click: $root.deleteAgenda">Del</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-sm-6">
+    <h2>Add New</h2>
+    <form class="form">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" data-bind="value: newAgendaName" placeholder="Event Name" />
+            </div>
+            <div class="form-group">
+                <label>Start Time</label>
+                <input type='text' data-bind='dateTimePicker: newAgendaStartTime' class="form-control" placeholder="Select Start Date" />
+            </div>
+            <div class="form-group">
+                <label>End Time</label>
+                <input type='text' data-bind='dateTimePicker: newAgendaEndTime' class="form-control" placeholder="Select End Date" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type='text' data-bind='value: newAgendaDesc' class="form-control" placeholder="Description" />
+            </div>
+        
+        <a class="btn btn-primary" data-bind="click: createAgenda">Create Agenda</a>
+    </form>
+</div>
