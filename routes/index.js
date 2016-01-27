@@ -4,7 +4,7 @@ var flash = require('connect-flash');
 var router = express.Router();
 
 var User = require('../models/user');
-var Agenda = require('../models/agenda.js');
+
 var mongoose = require('mongoose');
 
 
@@ -29,42 +29,10 @@ router.get('/signup', function(req, res){
 });
 
 router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/profile',
+    successRedirect: '/agendas',
     failureRedirect: '/signup',
     failureFlash: true
 }));
-
-router.get('/agendas', /*isLoggedIn,*/ function(req, res){
-    var agendaCount = 0
-
-    Agenda.count({ color: 'black' }, function(err, count){
-      console.log(count);  
-    })
-    Agenda.count({ "owner": req.user._id }, function(err, count){
-        if(err) console.log(err);
-        if(count > 0){
-        res.render('agendas/agendas.hbs', {
-            user: req.user, //Get the user and pass to template   
-            layout: 'app_layout',
-            title: 'Home'
-            });
-        }else{
-            res.redirect('/new_agenda');
-        }
-    });
-   
-    
-    
-    
-}); 
-
-router.get('/new_agenda', function(req, res){
-    res.render('agendas/new_agenda.hbs', {
-        user: req.user, //Get the user and pass to template   
-        layout: 'app_layout',
-        title: 'Home'
-    }); 
-});
 
 router.get('/logout', function(req, res){
     req.logout();

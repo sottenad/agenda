@@ -14,6 +14,7 @@ var app = express();
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
+var agendas = require('./routes/agendas');
 
 require('./config/passport')(passport);
 
@@ -39,6 +40,7 @@ app.use(passport.session()); // persistent login sessions
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api', api);
+app.use('/agendas', agendas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

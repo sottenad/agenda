@@ -1,5 +1,8 @@
-var mongoose     = require('mongoose');
-var Schema       = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema   = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
+
+var AgendaSchema = require('./agenda');
 
 var EventSchema   = new Schema({
     name: String,
@@ -7,6 +10,7 @@ var EventSchema   = new Schema({
     endTime: Date,
     description: String,
     location: String,
+    agenda: { type: ObjectId, ref: 'AgendaSchema' },
     owner: String
 });
 

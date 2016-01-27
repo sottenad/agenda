@@ -1,0 +1,42 @@
+<div class="col-sm-12">
+    <h2>{{agenda.name}}</h2>
+    <p>{{agenda.description}}</p>
+</div>
+
+<div class="col-sm-6">
+    <h2>Events</h2>
+    <ul>
+        {{#each agenda.events}}
+        <li>{{name}} - {{description}} <br />(<span class="moment">{{startTime}}</span> to <span class="moment">{{endTime}}</span>)</li>
+        {{/each}}
+    </ul>
+</div>
+<div class="col-sm-6">
+    <h2>Guests</h2>
+    <p><a data-bind="click: showModal">Add New Guest</a></p>
+    
+</div>
+
+
+<div class="modal fade" id="guestModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Create Guest</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" data-bind="value: guestEmail" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bind="click:addGuest">Create Guest</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+   window.currentAgenda = <%- JSON.stringify(agenda) %>
+</script>
+<script src="/javascripts/agendas/detail.js"></script>

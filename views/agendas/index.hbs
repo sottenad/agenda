@@ -1,0 +1,14 @@
+<div class="col-sm-6">
+    
+    <div class="agendaList">
+        <h2>Agendas</h2>
+        <table class="table" data-bind="foreach: agendas">
+            <tr>
+                <td><a data-bind="text: name, attr:{href: '/agendas/'+_id}"></a></td>
+                <td><a data-bind="click: $root.deleteAgenda">Del</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script src="javascripts/agendas.js"></script>

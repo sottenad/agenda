@@ -1,8 +1,3 @@
-function advanceSlide(){
-    $(this).parents('.wizardbox').addClass('hide').next('.wizardbox').removeClass('hide');   
-}
-
-
 function newAgendaVM () {
     var self = this;
     var today = new Date();
@@ -22,6 +17,8 @@ function newAgendaVM () {
     self.newEventLocation = ko.observable();
     self.newEventDesc = ko.observable();
     
+    self.createdAgendaId = ko.observable();
+    
     self.advanceSlideNum = function(){
         self.slideNum(self.slideNum() + 1);
     }
@@ -37,6 +34,7 @@ function newAgendaVM () {
             success:function(d){
                 console.log(d);
                 self.advanceSlideNum();
+                self.createdAgendaId(d.message._id);
                 //self.agendas.push(d.message)
             },
             failure: function(err, xhr, message){
@@ -57,12 +55,12 @@ function newAgendaVM () {
                 startTime: sDate.toISOString(),
                 endTime: eDate.toISOString(),
                 location: self.newEventLocation(),
+                agenda: self.createdAgendaId(),
                 description: self.newEventDesc()
             },
             success:function(d){
                 console.log(d);
                 self.advanceSlideNum();
-                //self.agendas.push(d.message)
             },
             failure: function(err, xhr, message){
                 console.log(err, xhr, message);

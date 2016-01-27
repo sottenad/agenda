@@ -78,16 +78,27 @@ router.route('/agendas/:agenda_id')
 router.route('/events')
     //Make a new agenda
     .post(isLoggedIn, function(req, res){
+        console.log('agenda: '+req.body.agenda);
+    
         var event = new Event();
         event.name = req.body.name;
         event.startTime = req.body.startTime;
         event.endTime = req.body.endTime;
         event.description = req.body.description;
         event.location = req.body.location;
+        event.agenda = req.body.agenda;
         event.owner = req.user._id;
-
-        event.save(function(err){
+        
+        event.save(function(err, event){
             if(err) res.send(err);
+            
+            Agenda.findById(event.agenda, function(err, agenda){
+                agenda.events.push(event._id);
+                agenda.save(function(err){
+                    if(err) console.log(agenda);
+                    console.log(agenda);
+                })
+            })
             res.json({message: event});
         });
     })
@@ -116,6 +127,7 @@ router.route('/events/:event_id')
             event.endTime = req.body.endTime;
             event.description = req.body.description;
             event.location = req.body.location;
+            event.agenda = req.body.agenda;
             event.owner = req.user._id;
             
             event.save(function(err){
@@ -142,8 +154,8 @@ router.route('/guests')
         var guest = new Guest();
         guest.name = req.body.name;
         guest.email = req.body.email;
-        guest.owner = req.user._id;
-
+        guest.agenda = req.body.agenda;
+        
         guest.save(function(err){
             if(err) res.send(err);
             res.json({message: guest});
@@ -171,7 +183,7 @@ router.route('/guests/:guest_id')
             if(err) res.send(err);
             guest.name = req.body.name;
             guest.email = req.body.email;
-            guest.owner = req.user._id;
+            guest.agenda = req.body.agenda;
             
             guest.save(function(err){
                 if(err) res.send(err);
